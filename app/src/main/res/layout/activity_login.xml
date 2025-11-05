@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_gravity="center">
+
+    <eightbitlab.com.blurview.BlurTarget
+        android:id="@+id/target"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_leaves"/>
+
+    </eightbitlab.com.blurview.BlurTarget>
+
+    <ProgressBar
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="250dp"
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <eightbitlab.com.blurview.BlurView
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        android:id="@+id/blurContainer"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginVertical="64dp"
+        android:background="@drawable/glass_bg"
+        android:elevation="6dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <!-- Email -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_marginTop="24dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email"
+                app:endIconTint="@color/white"
+                style="@style/TextInputContainer">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtEmail"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:layout_height="48dp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="0dp"
+                    android:textSize="18sp"
+                    android:drawableEnd="@drawable/ic_email"
+                    android:drawablePadding="8dp"
+                    android:layout_width="match_parent"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Password -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tilPassword"
+                style="@style/TextInputContainer"
+                android:hint="Password"
+                app:endIconMode="password_toggle"
+                app:endIconTint="@color/white">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPassword"
+                    android:inputType="textPassword"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:layout_height="48dp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="0dp"
+                    android:textSize="16sp"
+                    android:layout_width="match_parent"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/errorTv"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                android:textSize="14sp"
+                android:textColor="#F44336"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <!-- SIGN IN BUTTON-->
+
+            <Button
+                android:id="@+id/btnSignIn"
+                style="@style/ButtonPrimary"
+                android:text="SIGN IN"
+                android:layout_marginTop="20dp" />
+
+            <!-- forgot password -->
+            <TextView
+                android:id="@+id/tvForgotPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Forgot password?"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp" />
+
+            <!-- Login with Google -->
+            <Button
+                android:id="@+id/btnGoogle"
+                style="@style/ButtonOutlined"
+                android:text="SIGN IN WITH GOOGLE"
+                android:drawableStart="@drawable/ic_google"
+                android:paddingStart="16dp"
+                android:layout_marginTop="50dp" />
+
+            <!-- Link Sign Up -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Don’t have an account? "
+                    android:textColor="@color/white"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tvSignUp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sign up"
+                    android:textColor="@color/colorAccent"
+                    android:textStyle="bold"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </eightbitlab.com.blurview.BlurView>
+
+</RelativeLayout>
