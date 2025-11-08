@@ -8,6 +8,8 @@ import com.adr57.netdemo.network.dto.TokenResponse;
 import com.adr57.netdemo.network.dto.UploadResponse;
 import com.adr57.netdemo.network.dto.UserListResponse;
 
+import java.util.List;
+
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.*;
@@ -52,4 +54,7 @@ public interface ApiService {
     @Multipart
     @POST("users/{id}/avatar")
     Call<User> uploadAvatar(@Path("id") int userId, @Part MultipartBody.Part avatar);
+
+    @GET("users/search")
+    Call<List<User>> searchUsers(@Query("q") String query);
 }

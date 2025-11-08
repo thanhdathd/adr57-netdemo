@@ -38,4 +38,8 @@ public class User {
 
     public String getAvatarUrl() { return avatarUrl; }
     public void setAvatarUrl(String avatarUrl) { this.avatarUrl = avatarUrl; }
+
+    public com.adr57.netdemo.storage.database.entities.User toEntity() {
+        return new com.adr57.netdemo.storage.database.entities.User(id, name, email, displayName, avatarUrl);
+    }
 }

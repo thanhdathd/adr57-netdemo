@@ -1,6 +1,9 @@
 package com.adr57.netdemo;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.activity.EdgeToEdge;
@@ -16,15 +19,21 @@ import com.adr57.netdemo.adapter.UserAdapter;
 import com.adr57.netdemo.model.User;
 import com.adr57.netdemo.network.ApiCallback;
 import com.adr57.netdemo.network.ApiRepository;
+import com.adr57.netdemo.storage.PreferencesRepository;
+import com.adr57.netdemo.storage.database.AppDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements UserAdapter.onItemClickListener {
 
     RecyclerView recyclerView;
     List<User> userList = new ArrayList<>();
     UserAdapter adapter;
+    ApiRepository apiRepository;
+    PreferencesRepository preferencesRepository;
+    AppDatabase database;
+
 
 
     @Override
@@ -42,8 +51,44 @@ public class MainActivity extends AppCompatActivity {
         if(actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-        
+        database = AppDatabase.getDatabase(this);
+
+        apiRepository = new ApiRepository();
         setupViews();
+        getUsers();
+        saveUserInfo();
+    }
+
+    private void saveUserInfo() {
+        MyApplication application = (MyApplication) getApplication();
+        preferencesRepository = new PreferencesRepository(application.getDataStore());
+        preferencesRepository.setUsername("John Doe");
+        preferencesRepository.setUserAge(25);
+        preferencesRepository.setLoggedIn(true);
+    }
+
+    private void getUsers() {
+        apiRepository.getUsers(new ApiCallback<List<User>>() {
+            @Override
+            public void onSuccess(List<User> users) {
+                userList.clear();
+                userList.addAll(users);
+                adapter.notifyDataSetChanged();
+                new Handler().postDelayed(() -> {
+                    com.adr57.netdemo.storage.database.entities.User[] uarr =
+                            users.stream().map(u -> u.toEntity())
+                                    .toArray(com.adr57.netdemo.storage.database.entities.User[]::new);
+                    database.databaseWriteExecutor.execute(() -> {
+                        database.userDao().insertAll(uarr);
+                    });
+                }, 500);
+            }
+
+            @Override
+            public void onError(String error) {
+                // Xử lý lỗi
+            }
+        });
     }
 
 
@@ -63,6 +108,20 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new UserAdapter(userList);
+        adapter.setOnItemClickListener(this);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onItemClick(User user) {
+        Log.i("data", "id: "+user.getId());
+        Log.i("data", "Name: "+user.getName());
+        Log.i("data", "Email: "+user.getEmail());
+
+        Intent intent = new Intent(this, FullscreenActivity.class);
+        intent.putExtra("avatar", user.getAvatarUrl());
+        intent.putExtra("name", user.getName());
+        intent.putExtra("email", user.getEmail());
+        startActivity(intent);
     }
 }

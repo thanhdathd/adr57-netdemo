@@ -17,11 +17,23 @@ import java.util.List;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
 
+    public interface onItemClickListener {
+        void onItemClick(User user);
+    }
+
+
     private List<User> userList;
 
     public UserAdapter(List<User> userList) {
         this.userList = userList;
     }
+
+    private onItemClickListener listener;
+
+    public void setOnItemClickListener(onItemClickListener listener) {
+        this.listener = listener;
+    }
+
 
     @NonNull
     @Override
@@ -34,7 +46,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         User user = userList.get(position);
-        holder.bind(user);
+        holder.bind(user, listener);
     }
 
     @Override
@@ -53,7 +65,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             tvEmail = itemView.findViewById(R.id.tvEmail);
         }
 
-        public void bind(User user) {
+        public void bind(User user, onItemClickListener listener) {
             Glide.with(itemView.getContext())
                     .load(user.getAvatarUrl())
                     .placeholder(R.drawable.ic_placeholder)
@@ -61,6 +73,11 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
             tvName.setText(user.getName());
             tvEmail.setText(user.getEmail());
+            itemView.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onItemClick(user);
+                }
+            });
         }
     }
 }

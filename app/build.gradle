@@ -26,6 +26,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -40,8 +43,26 @@ dependencies {
     implementation libs.recyclerview
     annotationProcessor 'com.github.bumptech.glide:compiler:5.0.5'
 
+    // Preferences DataStore
+    implementation "androidx.datastore:datastore-preferences:1.1.7"
+    implementation "androidx.datastore:datastore-preferences-rxjava2:1.1.7"
+    implementation "androidx.datastore:datastore-preferences-rxjava3:1.1.7"
+
+    // Proto DataStore
+    implementation "androidx.datastore:datastore:1.1.7"
+    implementation "androidx.datastore:datastore-rxjava2:1.1.7"
+    implementation "androidx.datastore:datastore-rxjava3:1.1.7"
+
+    // Protocol Buffers
+    implementation "com.google.protobuf:protobuf-javalite:4.33.0"
+
     // Permissions
     implementation 'com.karumi:dexter:6.2.3'
+
+    // Room db
+    def room_version = "2.8.3"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
 
     implementation libs.blurview
     implementation libs.appcompat
