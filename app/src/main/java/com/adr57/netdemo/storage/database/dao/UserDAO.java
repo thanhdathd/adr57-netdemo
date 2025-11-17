@@ -3,6 +3,7 @@ package com.adr57.netdemo.storage.database.dao;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.adr57.netdemo.storage.database.entities.User;
@@ -11,6 +12,10 @@ import java.util.List;
 
 @Dao
 public interface UserDAO {
+
+//    @Query("SELECT COUNT(*) FROM users WHERE uid = :uid")
+//    int isUidExists(String uid);
+
     @Query("SELECT * FROM users")
     List<User> getAll();
 
@@ -27,10 +32,10 @@ public interface UserDAO {
     User findByDisplayName(String displayName);
 
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertAll(User... users);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertUser(User user);
 
     @Delete

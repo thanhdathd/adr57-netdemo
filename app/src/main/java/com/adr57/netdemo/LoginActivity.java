@@ -96,6 +96,13 @@ public class LoginActivity extends AppCompatActivity {
                         loginResponse.getEmail()
                 );
 
+                Log.d("LOGIN1", "Login successful");
+                Log.d("LOGIN1", "Token: " + loginResponse.getToken());
+                Log.d("LOGIN1", "Refresh Token: " + loginResponse.getRefreshToken());
+                Log.d("LOGIN1", "User ID: " + loginResponse.getUserId());
+                Log.d("LOGIN1", "Username: " + loginResponse.getUsername());
+                Log.d("LOGIN1", "Email: " + loginResponse.getEmail());
+
                 // Chuyển đến MainActivity
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 finish();

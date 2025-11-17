@@ -14,6 +14,7 @@ import java.io.IOException;
 
 public class AuthInterceptor implements Interceptor {
     private final TokenRepository tokenRepo;
+    private static boolean isRefreshing = false;
 
     public AuthInterceptor(TokenRepository tokenRepo) {
         this.tokenRepo = tokenRepo;
@@ -31,17 +32,20 @@ public class AuthInterceptor implements Interceptor {
         }
 
         Response response = chain.proceed(request);
-        if (response.code() == 401 || response.code() == 403) {
+        if ((response.code() == 401 || response.code() == 403) && !isRefreshing) {
             response.close();
+            isRefreshing = true;
 
             if (tokenRepo.refreshToken()) { // auto gain new access token
                 // refresh ok → retry
+                isRefreshing = false;
                 String newToken = tokenRepo.getAccessToken();
                 Request retry = request.newBuilder()
                         .header("Authorization", "Bearer " + newToken)
                         .build();
                 return chain.proceed(retry);
             } else {
+                isRefreshing = false;
                 tokenRepo.forceLogout();
             }
         }

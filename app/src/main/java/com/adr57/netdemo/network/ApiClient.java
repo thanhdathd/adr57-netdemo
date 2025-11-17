@@ -61,6 +61,26 @@ public class ApiClient {
         return client;
     }
 
+    public static ApiService getRefreshApi() {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(logging)
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .build();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .build();
+
+        return retrofit.create(ApiService.class);
+    }
+
     // Auth Interceptor cho việc thêm token vào header
 //    private static class AuthInterceptor implements Interceptor {
 //        @Override
