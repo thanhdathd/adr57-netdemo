@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.ActionBar;
@@ -21,6 +23,7 @@ import com.adr57.netdemo.network.ApiCallback;
 import com.adr57.netdemo.network.ApiRepository;
 import com.adr57.netdemo.storage.PreferencesRepository;
 import com.adr57.netdemo.storage.database.AppDatabase;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements UserAdapter.onIte
     ApiRepository apiRepository;
     PreferencesRepository preferencesRepository;
     AppDatabase database;
+    FloatingActionButton floatingProduct;
 
 
 
@@ -57,6 +61,8 @@ public class MainActivity extends AppCompatActivity implements UserAdapter.onIte
         setupViews();
         getUsers();
         saveUserInfo();
+        floatingProduct = findViewById(R.id.floatingProduct);
+        floatingProduct.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, LoadActivity.class)));
     }
 
     private void saveUserInfo() {
@@ -103,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements UserAdapter.onIte
                 return super.onOptionsItemSelected(item);
         }
     }
+
 
     private void setupViews() {
         recyclerView = findViewById(R.id.recyclerView);

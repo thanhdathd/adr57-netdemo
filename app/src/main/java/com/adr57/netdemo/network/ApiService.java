@@ -1,8 +1,10 @@
 package com.adr57.netdemo.network;
 
+import com.adr57.netdemo.model.Product;
 import com.adr57.netdemo.model.User;
 import com.adr57.netdemo.network.dto.LoginRequest;
 import com.adr57.netdemo.network.dto.LoginResponse;
+import com.adr57.netdemo.network.dto.ProductListResponse;
 import com.adr57.netdemo.network.dto.RefreshRequest;
 import com.adr57.netdemo.network.dto.TokenResponse;
 import com.adr57.netdemo.network.dto.UploadResponse;
@@ -20,8 +22,14 @@ public interface ApiService {
     @GET("users")
     Call<UserListResponse> getUsers();
 
+    @GET("products")
+    Call<ProductListResponse> getProducts();
+
     @GET("users/{id}")
     Call<User> getUser(@Path("id") int userId);
+
+    @GET("products/{id}")
+    Call<Product> getProduct(@Path("id") int productId);
 
     // POST requests
     @POST("users")

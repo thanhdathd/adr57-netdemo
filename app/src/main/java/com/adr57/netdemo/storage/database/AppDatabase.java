@@ -8,15 +8,18 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.adr57.netdemo.storage.database.dao.ProductDao;
 import com.adr57.netdemo.storage.database.dao.UserDAO;
+import com.adr57.netdemo.storage.database.entities.Product;
 import com.adr57.netdemo.storage.database.entities.User;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {User.class}, version = 1, exportSchema = false)
+@Database(entities = {User.class, Product.class}, version = 2, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract UserDAO userDao();
+    public abstract ProductDao productDao();
 
     private static volatile AppDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
@@ -53,5 +56,6 @@ public abstract class AppDatabase extends RoomDatabase {
             });
         }
     };
+
 
 }

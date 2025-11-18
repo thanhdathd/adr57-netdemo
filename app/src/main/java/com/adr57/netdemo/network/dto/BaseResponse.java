@@ -1,6 +1,9 @@
 package com.adr57.netdemo.network.dto;
 
+import com.adr57.netdemo.model.Product;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 public class BaseResponse<T> {
     @SerializedName("success")
@@ -31,6 +34,11 @@ public class BaseResponse<T> {
     public T getData() {
         return data;
     }
+
+    public List<Product> getDataForProduct() {
+        return (List<Product>) data;
+    }
+
 
     public void setData(T data) {
         this.data = data;
